@@ -1,31 +1,32 @@
 package events
 
 import (
+	"context"
 	"time"
+	coordinate "weatherit/usecases/coordinates"
 )
 
 type Domain struct {
-	ID          int
-	UserID      int
-	EventDate   time.Date
-	StartAt     time.Time
-	EndAt       time.Time
-	Title       string
-	Description string
-	Address     string
-	GeoLoc      Coordinate
+	ID             int
+	UserID         int
+	StartAt        time.Time
+	EndAt          time.Time
+	Title          string
+	Description    string
+	Address        string
+	GeoLoc         coordinate.Coordinate
+	EventChecklist []Checklist
 }
 
 type Checklist struct {
-	ID 			int
-	Name 		string
-	IsChecked 	bool
-	CheckedAt 	time.Time
+	ID        int
+	Name      string
+	IsChecked bool
 }
 
 type UseCase interface {
 	GetAllUserEvents(ctx context.Context, userId int) ([]Domain, error)
-	GetAllUserEventsByDateRange(ctx context.Context, userId int, from time.Date, to time.Date) ([]Domain, error)
+	GetAllUserEventsByDateRange(ctx context.Context, userId int, from time.Time, to time.Time) ([]Domain, error)
 	ScheduleEvent(ctx context.Context, event *Domain) (int, error)
 	CancelEvent(ctx context.Context, eventId int) error
 	UpdateEvent(ctx context.Context, event *Domain) error
@@ -37,30 +38,15 @@ type UseCase interface {
 
 type Repository interface {
 	Find(ctx context.Context, userId int) ([]Domain, error)
-	FindByDate(ctx context.Context, userId int, from time.Date, to time.Date) ([]Domain, error)
-	Store(ctx context.Context, newEvent *Domain)(int, error)
-	Delete(ctx context.Context, eventId int)(int, error)
-	Update(ctx context.Context, event *Domain)(int, error)
-	FetchChecklist(ctx context.Context, eventId int)([]Checklist, error)
-	StoreChecklist(ctx context.Context, checklist []*Checklist, eventId int) (int, error)
-	UpdateChecklist(ctx context.Context, checklist []*Checklist) (int, error)
-	DeleteChecklist(ctx context.Context, checklistIDs []int) error
-
+	FindByDate(ctx context.Context, userId int, from time.Time, to time.Time) ([]Domain, error)
+	Store(ctx context.Context, newEvent *Domain) (int, error)
+	Delete(ctx context.Context, eventId int) (int, error)
+	Update(ctx context.Context, event *Domain) (int, error)
 }
 
-
-type Coordinate struct {
-	Lat  float
-	Long float
-}
-
-func (c Coordinate) CreateCoordinate (point []int) Coordinate, error {
-	if len(point) < 2 {
-		return Coordinate{}, errors.New("Invalid point array")
-	} else {
-		return Coordinate{
-			Lat: point[0],
-			Long: point[1]
-		}, nil
-	}
+type ChecklistRepository interface {
+	Fetch(ctx context.Context, eventId int) ([]Checklist, error)
+	Store(ctx context.Context, checklist []*Checklist, eventId int) (int, error)
+	Update(ctx context.Context, checklist []*Checklist) (int, error)
+	Delete(ctx context.Context, checklistIDs []int) error
 }
