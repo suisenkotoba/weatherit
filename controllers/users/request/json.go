@@ -33,3 +33,7 @@ type UserLogin struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
+
+type UserLocation struct {
+	GeoLoc []float64 `json:"geo_loc"`
+}

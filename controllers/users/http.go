@@ -3,6 +3,7 @@ package users
 import (
 	"net/http"
 	"strings"
+	"weatherit/app/middleware"
 	controller "weatherit/controllers"
 	"weatherit/controllers/users/request"
 	errorMessage "weatherit/errors"
@@ -62,4 +63,19 @@ func (ctrl *UserController) CreateToken(c echo.Context) error {
 	}{Token: token}
 
 	return controller.NewSuccessResponse(c, response)
+}
+
+func (ctrl *UserController) UpdateLocation(c echo.Context) error {
+	ctx := c.Request().Context()
+	user := middleware.GetUser(c)
+
+	newLoc := request.UserLocation{}
+	if err := c.Bind(&newLoc); err != nil {
+		return controller.NewErrorResponse(c, http.StatusBadRequest, err)
+	}
+	err := ctrl.userUseCase.UpdateLocation(ctx, user.ID, newLoc.GeoLoc[0], newLoc.GeoLoc[1])
+	if err != nil{
+		return controller.NewErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	return controller.NewSuccessResponse(c, "Location updated!")
 }

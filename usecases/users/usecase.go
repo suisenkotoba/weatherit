@@ -69,9 +69,24 @@ func (uc *userUseCase) Store(ctx context.Context, data *Domain) (int, error) {
 
 	return id, nil
 }
+
 func (uc *userUseCase) GetByID(ctx context.Context, id int) (Domain, error) {
-	return Domain{}, nil
+	return uc.userRepository.GetByID(ctx, id)
 }
-func (uc *userUseCase) UpdateLocation(ctx context.Context, userId int, lat float64, long float64) {
+
+func (uc *userUseCase) Update(ctx context.Context, data *Domain) error {
+	return uc.userRepository.Update(ctx, data)
+}
+
+func (uc *userUseCase) UpdateLocation(ctx context.Context, userId int, lat float64, long float64) error {
+	user, err := uc.GetByID(ctx, userId)
+	if err != nil {
+		return err
+	}
+	user.GeoLoc.Lat = lat
+	user.GeoLoc.Long = long
+
+	err = uc.Update(ctx, &user)
+	return err
 
 }

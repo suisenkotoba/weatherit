@@ -23,6 +23,9 @@ func (cl *ControllerList) RouteRegister(e *echo.Echo) {
 	v1Auth.POST("/register/", cl.UserController.Store)
 	v1Auth.POST("/login/", cl.UserController.CreateToken)
 
+	v1User := v1.Group("/user", middleware.JWTWithConfig(cl.JWTMiddleware))
+	v1User.PUT("/loc/", cl.UserController.UpdateLocation)
+
 	v1Event := v1.Group("/event", middleware.JWTWithConfig(cl.JWTMiddleware))
 	v1Event.POST("/", cl.EventController.Store)
 	v1Event.PUT("/", cl.EventController.UpdateEvent)
