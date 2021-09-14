@@ -14,6 +14,9 @@ import (
 	_eventController "weatherit/controllers/events"
 	_eventUsecase "weatherit/usecases/events"
 
+	_interestController "weatherit/controllers/interests"
+	_interestUsecase "weatherit/usecases/interests"
+
 	echo "github.com/labstack/echo/v4"
 	"github.com/spf13/viper"
 )
@@ -59,10 +62,15 @@ func main() {
 	eventUsecase := _eventUsecase.NewEventUseCase(timeoutContext, eventRepo)
 	eventCtrl := _eventController.NewEventController(eventUsecase)
 
+	interestRepo := _driverFactory.NewInterestRepository(db)
+	interestUsecase := _interestUsecase.NewInterestUseCase(timeoutContext, interestRepo)
+	interestCtrl := _interestController.NewInterestController(interestUsecase)
+
 	routesInit := _routes.ControllerList{
 		JWTMiddleware:   configJWT.Init(),
 		UserController:  *userCtrl,
 		EventController: *eventCtrl,
+		InterestController: *interestCtrl,
 	}
 	routesInit.RouteRegister(e)
 
