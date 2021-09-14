@@ -48,7 +48,23 @@ func (er *mysqlEventRepository) Find(ctx context.Context, userId int) ([]events.
 }
 
 func (er *mysqlEventRepository) FindByDate(ctx context.Context, userId int, from time.Time, to time.Time) ([]events.Domain, error) {
-	return []events.Domain{}, nil
+	rec := []Event{}
+
+	query := er.Conn.Debug()
+
+	err := query.Preload("EventChecklists").Find(&rec,
+		"user_id = ? AND start_at BETWEEN ? AND ?",
+		userId, from, to).Error
+	if err != nil {
+		return []events.Domain{}, err
+	}
+
+	eventDomain := []events.Domain{}
+	for _, value := range rec {
+		eventDomain = append(eventDomain, value.ToDomain())
+	}
+
+	return eventDomain, nil
 }
 
 func (er *mysqlEventRepository) Store(ctx context.Context, newEvent *events.Domain) (int, error) {

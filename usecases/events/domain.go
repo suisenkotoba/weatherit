@@ -25,7 +25,7 @@ type Checklist struct {
 }
 
 type UseCase interface {
-	GetAllUserEvents(ctx context.Context, userId int) ([]Domain, error)
+	GetAllUserEvents(ctx context.Context, userId int, from, to, month string) ([]Domain, error)
 	GetAllUserEventsByDateRange(ctx context.Context, userId int, from time.Time, to time.Time) ([]Domain, error)
 	ScheduleEvent(ctx context.Context, event *Domain) (int, error)
 	CancelEvent(ctx context.Context, eventId int) error

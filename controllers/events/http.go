@@ -46,15 +46,16 @@ func (ctrl *EventController) GetEvents(c echo.Context) error {
 	ctx := c.Request().Context()
 	user := middleware.GetUser(c)
 
-	// start := c.QueryParam("start")
-	// end := c.QueryParam("end")
+	start := c.QueryParam("start")
+	end := c.QueryParam("end")
+	month := c.QueryParam("month")
 
-	dataDomain, err :=  ctrl.eventUseCase.GetAllUserEvents(ctx, user.ID)
+	dataDomain, err := ctrl.eventUseCase.GetAllUserEvents(ctx, user.ID, start, end, month)
 	if err != nil {
 		return controller.NewErrorResponse(c, http.StatusInternalServerError, err)
 	}
 	data := []response.Event{}
-	for i := 0; i< len(dataDomain) ; i++{
+	for i := 0; i < len(dataDomain); i++ {
 		data = append(data, response.FromDomain(dataDomain[i]))
 	}
 	return controller.NewSuccessResponse(c, data)
