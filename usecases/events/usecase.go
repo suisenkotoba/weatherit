@@ -61,13 +61,14 @@ func (eu *eventUseCase) ScheduleEvent(ctx context.Context, event *Domain) (int, 
 	return eventId, nil
 }
 
-func (eu *eventUseCase) CancelEvent(ctx context.Context, eventId int) error {
-	return nil
+func (eu *eventUseCase) CancelEvent(ctx context.Context, eventId, userId int) error {
+	_, err := eu.eventRepository.Delete(ctx, eventId, userId)
+	return err
 }
 
 func (eu *eventUseCase) UpdateEvent(ctx context.Context, event *Domain) error {
-	return nil
-
+	_, err := eu.eventRepository.Update(ctx, event)
+	return err
 }
 
 func (eu *eventUseCase) GetEventChecklist(ctx context.Context, eventID int) ([]Checklist, error) {

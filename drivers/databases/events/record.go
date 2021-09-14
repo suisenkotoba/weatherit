@@ -69,7 +69,8 @@ func fromDomain(event events.Domain) *Event {
 		c := EventChecklist{
 			ID:        event.EventChecklist[i].ID,
 			Name:      event.EventChecklist[i].Name,
-			IsChecked: event.EventChecklist[i].IsChecked}
+			IsChecked: event.EventChecklist[i].IsChecked,
+			EventID: event.ID,}
 		checklists = append(checklists, c)
 	}
 	return &Event{

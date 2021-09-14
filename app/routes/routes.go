@@ -25,7 +25,9 @@ func (cl *ControllerList) RouteRegister(e *echo.Echo) {
 
 	v1Event := v1.Group("/event", middleware.JWTWithConfig(cl.JWTMiddleware))
 	v1Event.POST("/", cl.EventController.Store)
+	v1Event.PUT("/", cl.EventController.UpdateEvent)
 	v1Event.GET("/", cl.EventController.GetEvents)
+	v1Event.DELETE("/:id/", cl.EventController.DeleteEvent)
 
 	data, _ := json.MarshalIndent(e.Routes(), "", "  ")
 	ioutil.WriteFile("routes.json", data, 0644)

@@ -28,7 +28,7 @@ type UseCase interface {
 	GetAllUserEvents(ctx context.Context, userId int, from, to, month string) ([]Domain, error)
 	GetAllUserEventsByDateRange(ctx context.Context, userId int, from time.Time, to time.Time) ([]Domain, error)
 	ScheduleEvent(ctx context.Context, event *Domain) (int, error)
-	CancelEvent(ctx context.Context, eventId int) error
+	CancelEvent(ctx context.Context, eventId, userId int) error
 	UpdateEvent(ctx context.Context, event *Domain) error
 	GetEventChecklist(ctx context.Context, eventID int) ([]Checklist, error)
 	CreateEventCheklist(ctx context.Context, checklists []*Checklist, eventId int) (int, error)
@@ -40,7 +40,7 @@ type Repository interface {
 	Find(ctx context.Context, userId int) ([]Domain, error)
 	FindByDate(ctx context.Context, userId int, from time.Time, to time.Time) ([]Domain, error)
 	Store(ctx context.Context, newEvent *Domain) (int, error)
-	Delete(ctx context.Context, eventId int) (int, error)
+	Delete(ctx context.Context, eventId, userId int) (int, error)
 	Update(ctx context.Context, event *Domain) (int, error)
 }
 

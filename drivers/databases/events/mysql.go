@@ -2,6 +2,7 @@ package events
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"weatherit/usecases/events"
@@ -32,7 +33,7 @@ func NewEventChecklistRepository(conn *gorm.DB) events.ChecklistRepository {
 func (er *mysqlEventRepository) Find(ctx context.Context, userId int) ([]events.Domain, error) {
 	rec := []Event{}
 
-	query := er.Conn.Debug()
+	query := er.Conn
 
 	err := query.Preload("EventChecklists").Find(&rec, "user_id = ?", userId).Error
 	if err != nil {
@@ -50,7 +51,7 @@ func (er *mysqlEventRepository) Find(ctx context.Context, userId int) ([]events.
 func (er *mysqlEventRepository) FindByDate(ctx context.Context, userId int, from time.Time, to time.Time) ([]events.Domain, error) {
 	rec := []Event{}
 
-	query := er.Conn.Debug()
+	query := er.Conn
 
 	err := query.Preload("EventChecklists").Find(&rec,
 		"user_id = ? AND start_at BETWEEN ? AND ?",
@@ -78,12 +79,36 @@ func (er *mysqlEventRepository) Store(ctx context.Context, newEvent *events.Doma
 	return rec.ID, nil
 }
 
-func (er *mysqlEventRepository) Delete(ctx context.Context, eventId int) (int, error) {
-	return 0, nil
+func (er *mysqlEventRepository) Delete(ctx context.Context, eventId, userId int) (int, error) {
+	result := er.Conn.Where("id = ? AND user_id = ?", eventId, userId).Delete(&Event{})
+	fmt.Println(result)
+	return 0, result.Error
 }
 
 func (er *mysqlEventRepository) Update(ctx context.Context, event *events.Domain) (int, error) {
-	return 0, nil
+	rec := fromDomain(*event)
+
+	checklistRec := rec.EventChecklists
+	rec.EventChecklists = []EventChecklist{}
+
+	tx := er.Conn.Begin()
+	eventResult := tx.Save(&rec).Debug()
+	if eventResult.Error != nil {
+		tx.Rollback()
+		return 0, eventResult.Error
+	}
+
+	for i := 0; i< len(checklistRec); i++{
+		checklistResult := tx.Save(&checklistRec[i]).Debug()
+		if checklistResult.Error != nil {
+			tx.Rollback()
+			return 0, checklistResult.Error
+		}
+	}
+	
+	tx.Commit()
+
+	return rec.ID, nil
 }
 
 func (evr *mysqlEventCheklistRepository) Fetch(ctx context.Context, eventId int) ([]events.Checklist, error) {

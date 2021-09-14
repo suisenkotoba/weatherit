@@ -2,6 +2,7 @@ package events
 
 import (
 	"net/http"
+	"strconv"
 	"weatherit/app/middleware"
 	controller "weatherit/controllers"
 	"weatherit/controllers/events/request"
@@ -59,4 +60,42 @@ func (ctrl *EventController) GetEvents(c echo.Context) error {
 		data = append(data, response.FromDomain(dataDomain[i]))
 	}
 	return controller.NewSuccessResponse(c, data)
+}
+
+func (ctrl *EventController) DeleteEvent(c echo.Context) error {
+	ctx := c.Request().Context()
+	user := middleware.GetUser(c)
+	paramId := c.Param("id")
+
+	eventId, err := strconv.Atoi(paramId)
+	if err != nil {
+		return controller.NewErrorResponse(c, http.StatusBadRequest, err)
+	}
+
+	err2 := ctrl.eventUseCase.CancelEvent(ctx, eventId, user.ID)
+
+	if err2 != nil {
+		return controller.NewErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	return controller.NewSuccessResponse(c, "Event Canceled")
+}
+
+func (ctrl *EventController) UpdateEvent(c echo.Context) error {
+	ctx := c.Request().Context()
+	user := middleware.GetUser(c)
+
+	req := request.UpdatedEvent{}
+	if err := c.Bind(&req); err != nil {
+		return controller.NewErrorResponse(c, http.StatusBadRequest, err)
+	}
+	event, err := req.ToDomain(user.ID)
+	if err != nil {
+		return controller.NewErrorResponse(c, http.StatusBadRequest, err)
+	}
+
+	err = ctrl.eventUseCase.UpdateEvent(ctx, event)
+	if err != nil {
+		return controller.NewErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	return controller.NewSuccessResponse(c, "Event Updated")
 }
