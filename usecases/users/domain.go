@@ -20,12 +20,14 @@ type Domain struct {
 type UseCase interface {
 	CreateToken(ctx context.Context, email, password string) (string, error)
 	Store(ctx context.Context, data *Domain) (int, error)
+	Update(ctx context.Context, data *Domain) error
 	GetByID(ctx context.Context, id int) (Domain, error)
-	UpdateLocation(ctx context.Context, userId int, lat float64, long float64)
+	UpdateLocation(ctx context.Context, userId int, lat float64, long float64) error
 }
 
 type Repository interface {
+	GetByID(ctx context.Context, userId int) (Domain, error)
 	GetByEmail(ctx context.Context, email string) (Domain, error)
 	Store(ctx context.Context, data *Domain) (int, error)
-	Update(ctx context.Context, data *Domain)
+	Update(ctx context.Context, data *Domain) error
 }

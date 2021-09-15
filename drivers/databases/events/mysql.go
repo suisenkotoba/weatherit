@@ -92,14 +92,14 @@ func (er *mysqlEventRepository) Update(ctx context.Context, event *events.Domain
 	rec.EventChecklists = []EventChecklist{}
 
 	tx := er.Conn.Begin()
-	eventResult := tx.Save(&rec).Debug()
+	eventResult := tx.Save(&rec)
 	if eventResult.Error != nil {
 		tx.Rollback()
 		return 0, eventResult.Error
 	}
 
 	for i := 0; i< len(checklistRec); i++{
-		checklistResult := tx.Save(&checklistRec[i]).Debug()
+		checklistResult := tx.Save(&checklistRec[i])
 		if checklistResult.Error != nil {
 			tx.Rollback()
 			return 0, checklistResult.Error

@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	controller "weatherit/controllers"
 	"net/http"
 	"time"
+	controller "weatherit/controllers"
 
 	"github.com/golang-jwt/jwt"
 	echo "github.com/labstack/echo/v4"
@@ -36,7 +36,7 @@ func (jwtConf *ConfigJWT) GenerateToken(userID int, userEmail string) string {
 		userID,
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().Local().Add(time.Minute * time.Duration(int64(jwtConf.ExpiresDuration))).Unix(),
-			Subject: userEmail,
+			Subject:   userEmail,
 		},
 	}
 
@@ -49,7 +49,7 @@ func (jwtConf *ConfigJWT) GenerateToken(userID int, userEmail string) string {
 
 // GetUser from jwt ...
 func GetUser(c echo.Context) *JwtCustomClaims {
-	user := c.Get("user").(*jwt.Token)	
+	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(*JwtCustomClaims)
 	return claims
 }

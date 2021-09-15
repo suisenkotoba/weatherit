@@ -17,6 +17,15 @@ func NewUserRepository(conn *gorm.DB) users.Repository {
 	}
 }
 
+func (ur *mysqlUserRepository) GetByID(ctx context.Context, userId int) (users.Domain, error){
+	rec := User{}
+	err := ur.Conn.Where("id = ?", userId).First(&rec).Error
+	if err != nil {
+		return users.Domain{}, err
+	}
+	return rec.ToDomain(), nil
+}
+
 func (ur *mysqlUserRepository) GetByEmail(ctx context.Context, email string) (users.Domain, error) {
 	rec := User{}
 	err := ur.Conn.Where("email = ?", email).First(&rec).Error
@@ -37,6 +46,12 @@ func (ur *mysqlUserRepository) Store(ctx context.Context, data *users.Domain) (i
 	return rec.ID, nil
 }
 
-func (ur *mysqlUserRepository) Update(ctx context.Context, data *users.Domain) {
-	return
+func (ur *mysqlUserRepository) Update(ctx context.Context, data *users.Domain) error{
+	rec := fromDomain(*data)
+	result := ur.Conn.Updates(&rec)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
 }
