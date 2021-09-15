@@ -37,3 +37,7 @@ type UserLogin struct {
 type UserLocation struct {
 	GeoLoc []float64 `json:"geo_loc"`
 }
+
+type UserInterests struct {
+	Interests []int `json:"interests"`
+}

@@ -10,17 +10,20 @@ import (
 	"weatherit/controllers/users/response"
 	errorMessage "weatherit/errors"
 	"weatherit/usecases/users"
+	userInterests "weatherit/usecases/user_interests"
 
 	echo "github.com/labstack/echo/v4"
 )
 
 type UserController struct {
 	userUseCase users.UseCase
+	userInterestUseCase userInterests.UseCase
 }
 
-func NewUserController(uc users.UseCase) *UserController {
+func NewUserController(uc users.UseCase, ic userInterests.UseCase) *UserController {
 	return &UserController{
 		userUseCase: uc,
+		userInterestUseCase: ic,
 	}
 }
 
@@ -112,4 +115,19 @@ func (ctrl *UserController) UpdateLocation(c echo.Context) error {
 		return controller.NewErrorResponse(c, http.StatusInternalServerError, err)
 	}
 	return controller.NewSuccessResponse(c, "Location updated!")
+}
+
+func (ctrl *UserController) SetInterest(c echo.Context) error {
+	ctx := c.Request().Context()
+	user := middleware.GetUser(c)
+
+	interests := request.UserInterests{}
+	if err := c.Bind(&interests); err != nil {
+		return controller.NewErrorResponse(c, http.StatusBadRequest, err)
+	}
+	err := ctrl.userInterestUseCase.SetUserInterest(ctx, user.ID, interests.Interests)
+	if err != nil{
+		return controller.NewErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	return controller.NewSuccessResponse(c, "Successfully add interest(s)")
 }

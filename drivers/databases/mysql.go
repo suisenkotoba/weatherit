@@ -9,6 +9,7 @@ import (
 	"weatherit/drivers/databases/events"
 	"weatherit/drivers/databases/interests"
 	"weatherit/drivers/databases/users"
+	userInterests "weatherit/drivers/databases/user_interests"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -55,6 +56,7 @@ func DBMigrate(db *gorm.DB) {
 		&events.EventChecklist{},
 		&users.User{},
 		&interests.Interest{},
+		&userInterests.UserInterest{},
 	)
 
 	// init interests

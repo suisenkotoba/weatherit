@@ -29,6 +29,7 @@ func (cl *ControllerList) RouteRegister(e *echo.Echo) {
 	v1User.GET("/me/", cl.UserController.GetProfile)
 	v1User.PUT("/me/", cl.UserController.UpdateProfile)
 	v1User.PUT("/loc/", cl.UserController.UpdateLocation)
+	v1User.PUT("/interest/", cl.UserController.SetInterest)
 
 	v1Interest := v1.Group("/interests", middleware.JWTWithConfig(cl.JWTMiddleware))
 	v1Interest.GET("/", cl.InterestController.GetAll)
