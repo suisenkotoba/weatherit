@@ -17,9 +17,9 @@ func NewActivityRepository(conn *gorm.DB) activities.Repository {
 	}
 }
 
-func (ar *mysqlActivityRepository) FindActivitiesByInterest(ctx context.Context, interestIds []int) []activities.Domain {
+func (ar *mysqlActivityRepository) FindActivitiesByInterest(ctx context.Context, interestIds []int, isOut bool) []activities.Domain {
 	rec := []Activity{}
-	err := ar.Conn.Preload("Interest").Find(&rec, "interest_id IN (?)", interestIds).Error
+	err := ar.Conn.Preload("Interest").Find(&rec, "interest_id IN (?) AND is_outdoor = ?", interestIds, isOut).Error
 	if err != nil {
 		return []activities.Domain{}
 	}

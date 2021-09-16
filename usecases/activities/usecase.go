@@ -17,8 +17,8 @@ func NewActivityUseCase(timeout time.Duration, ar Repository) UseCase {
 	}
 }
 
-func (au *activityUseCase) GetActivitiesByInterest(ctx context.Context, interestIds []int) []Domain {
-	return au.activityRepository.FindActivitiesByInterest(ctx, interestIds)
+func (au *activityUseCase) GetActivitiesByInterest(ctx context.Context, interestIds []int, isOut bool) []Domain {
+	return au.activityRepository.FindActivitiesByInterest(ctx, interestIds, isOut)
 }
 
 func (au *activityUseCase) GetActivitiesInOut(ctx context.Context, isOut bool) []Domain {

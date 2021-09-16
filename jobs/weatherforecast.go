@@ -10,6 +10,15 @@ import (
 )
 
 func Forecast(uc usecases.UsecaseList, offset string) {
+	niceWeatherIndex := map[string]int{
+		"Thunderstorm": 200,
+		"Drizzle":      300,
+		"Rain":         500,
+		"Snow":         600,
+		"Atmosphere":   700,
+		"Clear":        800,
+		"Clouds":       800}
+
 	ctx := context.TODO()
 
 	events := []events.Domain{}
@@ -45,11 +54,14 @@ func Forecast(uc usecases.UsecaseList, offset string) {
 		if offset == "H1" {
 			weather := uc.Event.ForecastEvent(events[i], "hour", dt1, dt2)
 			alterPlan.WeatherForecastH1 = weather.Name
-			interests := uc.UserInterest.GetUserInterestIDs(ctx, events[i].UserID)
-			activities := uc.Activity.GetActivitiesByInterest(ctx, interests)
-			randomIndex := rand.Intn(len(activities))
-			alterPlan.ActivityID = activities[randomIndex].ID
-			//	TODO send via pusher
+			if niceWeatherIndex[weather.Name] < 700 {
+				interests := uc.UserInterest.GetUserInterestIDs(ctx, events[i].UserID)
+				activities := uc.Activity.GetActivitiesByInterest(ctx, interests, true)
+				randomIndex := rand.Intn(len(activities))
+				alterPlan.ActivityID = activities[randomIndex].ID
+				//	TODO send via pusher
+			}
+
 		} else if offset == "H6" {
 			weather := uc.Event.ForecastEvent(events[i], "hour", dt1, dt2)
 			alterPlan.WeatherForecastH6 = weather.Name
