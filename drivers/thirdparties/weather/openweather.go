@@ -50,3 +50,17 @@ func (ow *OpenWeather) GetDailyForecast(lat, long float64) []WeatherForecast {
 	res := ow.GetForecast(lat, long, excludes)
 	return res.Daily
 }
+
+func (ow *OpenWeather) GetTargetDTForcast(lat, long float64, dt int, mode string) Weather {
+	targetForecast := Weather{}
+	forecasts := []WeatherForecast{}
+	if mode == "hour" {
+		forecasts = ow.GetHourlyForecast(lat, long)
+	} else if mode == "day" {
+		forecasts = ow.GetDailyForecast(lat, long)
+	}
+	for i := 0; i < len(forecasts); i++ {
+		if forecasts[i].DT == 
+	}
+	return targetForecast
+}
