@@ -7,6 +7,12 @@ import (
 	eventDB "weatherit/drivers/databases/events"
 	eventDomain "weatherit/usecases/events"
 
+	alterplanDB "weatherit/drivers/databases/alterplans"
+	alterplanDomain "weatherit/usecases/alterplan"
+
+	activityDB "weatherit/drivers/databases/activities"
+	activityDomain "weatherit/usecases/activities"
+
 	interestDB "weatherit/drivers/databases/interests"
 	interestDomain "weatherit/usecases/interests"
 
@@ -24,6 +30,14 @@ func NewEventRepository(conn *gorm.DB) eventDomain.Repository {
 	return eventDB.NewEventRepository(conn)
 }
 
+func NewActivityRepository(conn *gorm.DB) activityDomain.Repository {
+	return activityDB.NewActivityRepository(conn)
+}
+
+func NewAlterPlanRepository(conn *gorm.DB) alterplanDomain.Repository {
+	return alterplanDB.NewAlterPlanRepository(conn)
+}
+
 func NewInterestRepository(conn *gorm.DB) interestDomain.Repository {
 	return interestDB.NewInterestRepository(conn)
 }
@@ -31,4 +45,3 @@ func NewInterestRepository(conn *gorm.DB) interestDomain.Repository {
 func NewUserInterestRepository(conn *gorm.DB) userInterestDomain.Repository {
 	return userInterestDB.NewUserInterestRepository(conn)
 }
-
