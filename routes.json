@@ -1,26 +1,21 @@
 [
   {
-    "method": "DELETE",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PUT",
-    "path": "v1/users/loc/",
-    "name": "weatherit/controllers/users.(*UserController).UpdateLocation-fm"
-  },
-  {
     "method": "PUT",
     "path": "v1/users/interest/",
     "name": "weatherit/controllers/users.(*UserController).SetInterest-fm"
   },
   {
-    "method": "PUT",
-    "path": "v1/event/*",
+    "method": "TRACE",
+    "path": "v1/interests/*",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "GET",
+    "method": "PATCH",
+    "path": "v1/event",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "POST",
     "path": "v1/users",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
@@ -100,14 +95,14 @@
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "HEAD",
+    "method": "CONNECT",
     "path": "v1/users/*",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "OPTIONS",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
+    "method": "PUT",
+    "path": "v1/users/me/",
+    "name": "weatherit/controllers/users.(*UserController).UpdateProfile-fm"
   },
   {
     "method": "GET",
@@ -135,7 +130,7 @@
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "HEAD",
+    "method": "PROPFIND",
     "path": "v1/interests",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
@@ -155,8 +150,8 @@
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "PATCH",
-    "path": "v1/event/*",
+    "method": "OPTIONS",
+    "path": "v1/users/*",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {

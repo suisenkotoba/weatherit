@@ -88,27 +88,14 @@ func (er *mysqlEventRepository) Delete(ctx context.Context, eventId, userId int)
 func (er *mysqlEventRepository) Update(ctx context.Context, event *events.Domain) (int, error) {
 	rec := fromDomain(*event)
 
-	checklistRec := rec.EventChecklists
-	rec.EventChecklists = []EventChecklist{}
+	err := er.Conn.Updates(rec).Error
 
-	tx := er.Conn.Begin()
-	eventResult := tx.Save(&rec)
-	if eventResult.Error != nil {
-		tx.Rollback()
-		return 0, eventResult.Error
+	if rec != nil {
+		return 0, err
 	}
-
-	for i := 0; i< len(checklistRec); i++{
-		checklistResult := tx.Save(&checklistRec[i])
-		if checklistResult.Error != nil {
-			tx.Rollback()
-			return 0, checklistResult.Error
-		}
-	}
-	
-	tx.Commit()
 
 	return rec.ID, nil
+	
 }
 
 func (evr *mysqlEventCheklistRepository) Fetch(ctx context.Context, eventId int) ([]events.Checklist, error) {
