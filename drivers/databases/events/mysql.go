@@ -68,6 +68,24 @@ func (er *mysqlEventRepository) FindByDate(ctx context.Context, userId int, from
 	return eventDomain, nil
 }
 
+func (er *mysqlEventRepository) FindAllByDate(ctx context.Context, from time.Time, to time.Time) ([]events.Domain, error){
+	rec := []Event{}
+
+	query := er.Conn
+
+	err := query.Find(&rec, "start_at BETWEEN ? AND ?", from, to).Error
+	if err != nil {
+		return []events.Domain{}, err
+	}
+
+	eventDomain := []events.Domain{}
+	for _, value := range rec {
+		eventDomain = append(eventDomain, value.ToDomain())
+	}
+
+	return eventDomain, nil
+}
+
 func (er *mysqlEventRepository) Store(ctx context.Context, newEvent *events.Domain) (int, error) {
 	rec := fromDomain(*newEvent)
 
