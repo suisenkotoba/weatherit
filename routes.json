@@ -1,222 +1,32 @@
 [
   {
-    "method": "PATCH",
-    "path": "v1/users",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "TRACE",
-    "path": "v1/users",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "GET",
-    "path": "v1/interests/",
-    "name": "weatherit/controllers/interests.(*InterestController).GetAll-fm"
-  },
-  {
-    "method": "REPORT",
-    "path": "v1/event",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "GET",
-    "path": "v1/users",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "POST",
-    "path": "v1/interests",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "TRACE",
-    "path": "v1/interests/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "REPORT",
-    "path": "v1/event/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "CONNECT",
-    "path": "v1/interests",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PUT",
-    "path": "v1/users",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "GET",
-    "path": "v1/interests",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "POST",
-    "path": "v1/interests/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PUT",
-    "path": "v1/interests/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "GET",
-    "path": "v1/event/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PUT",
-    "path": "v1/event/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "POST",
-    "path": "v1/users",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "HEAD",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "OPTIONS",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "DELETE",
-    "path": "v1/interests/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "OPTIONS",
-    "path": "v1/users",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "POST",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PUT",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "TRACE",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "HEAD",
-    "path": "v1/interests",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "GET",
-    "path": "v1/interests/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "POST",
-    "path": "v1/event",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "POST",
-    "path": "v1/auth/register/",
-    "name": "weatherit/controllers/users.(*UserController).Store-fm"
-  },
-  {
-    "method": "PUT",
-    "path": "v1/users/me/",
-    "name": "weatherit/controllers/users.(*UserController).UpdateProfile-fm"
-  },
-  {
-    "method": "GET",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PATCH",
-    "path": "v1/interests",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "CONNECT",
-    "path": "v1/event/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PATCH",
-    "path": "v1/event/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "GET",
-    "path": "v1/event/",
-    "name": "weatherit/controllers/events.(*EventController).GetEvents-fm"
-  },
-  {
-    "method": "HEAD",
-    "path": "v1/users",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
     "method": "PUT",
     "path": "v1/users/interest/",
     "name": "weatherit/controllers/users.(*UserController).SetInterest-fm"
   },
   {
-    "method": "PATCH",
+    "method": "TRACE",
     "path": "v1/interests/*",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "OPTIONS",
+    "method": "PATCH",
     "path": "v1/event",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "PUT",
-    "path": "v1/users/loc/",
-    "name": "weatherit/controllers/users.(*UserController).UpdateLocation-fm"
+    "method": "POST",
+    "path": "v1/users",
+    "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "TRACE",
+    "method": "PUT",
     "path": "v1/interests",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "OPTIONS",
+    "method": "HEAD",
     "path": "v1/interests/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "GET",
-    "path": "v1/users/me/",
-    "name": "weatherit/controllers/users.(*UserController).GetProfile-fm"
-  },
-  {
-    "method": "GET",
-    "path": "v1/event",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PUT",
-    "path": "v1/event",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "DELETE",
-    "path": "v1/event/*",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
@@ -225,73 +35,63 @@
     "name": "weatherit/controllers/events.(*EventController).DeleteEvent-fm"
   },
   {
-    "method": "DELETE",
+    "method": "HEAD",
+    "path": "v1/users/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "POST",
     "path": "v1/interests",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
     "method": "DELETE",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PROPFIND",
-    "path": "v1/interests/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "DELETE",
     "path": "v1/event",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "POST",
-    "path": "v1/event/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "REPORT",
-    "path": "v1/users",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PATCH",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "REPORT",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "REPORT",
-    "path": "v1/interests/*",
+    "method": "GET",
+    "path": "v1/event",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
     "method": "CONNECT",
-    "path": "v1/event",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "HEAD",
-    "path": "v1/event",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PROPFIND",
-    "path": "v1/event",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "TRACE",
     "path": "v1/event/*",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "PROPFIND",
-    "path": "v1/users",
+    "method": "TRACE",
+    "path": "v1/users/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "REPORT",
+    "path": "v1/interests",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "PUT",
+    "path": "v1/interests/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "GET",
+    "path": "v1/event/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "CONNECT",
+    "path": "v1/users/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "PUT",
+    "path": "v1/users/me/",
+    "name": "weatherit/controllers/users.(*UserController).UpdateProfile-fm"
+  },
+  {
+    "method": "HEAD",
+    "path": "v1/event",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
@@ -300,47 +100,32 @@
     "name": "weatherit/controllers/events.(*EventController).UpdateEvent-fm"
   },
   {
-    "method": "DELETE",
+    "method": "POST",
+    "path": "v1/auth/register/",
+    "name": "weatherit/controllers/users.(*UserController).Store-fm"
+  },
+  {
+    "method": "PUT",
     "path": "v1/users",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "PROPFIND",
-    "path": "v1/interests",
-    "name": "github.com/labstack/echo/v4.glob..func1"
+    "method": "PUT",
+    "path": "v1/users/loc/",
+    "name": "weatherit/controllers/users.(*UserController).UpdateLocation-fm"
   },
   {
-    "method": "REPORT",
+    "method": "PROPFIND",
     "path": "v1/interests",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
     "method": "PATCH",
-    "path": "v1/event",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "HEAD",
     "path": "v1/event/*",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "CONNECT",
-    "path": "v1/users",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "CONNECT",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PROPFIND",
-    "path": "v1/users/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
-  },
-  {
-    "method": "PROPFIND",
+    "method": "REPORT",
     "path": "v1/event/*",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
@@ -350,7 +135,67 @@
     "name": "weatherit/controllers/users.(*UserController).CreateToken-fm"
   },
   {
-    "method": "CONNECT",
+    "method": "GET",
+    "path": "v1/users/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "GET",
+    "path": "v1/interests",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "DELETE",
+    "path": "v1/users/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "OPTIONS",
+    "path": "v1/users/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "OPTIONS",
+    "path": "v1/interests/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "REPORT",
+    "path": "v1/interests/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "TRACE",
+    "path": "v1/users",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "PROPFIND",
+    "path": "v1/users",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "POST",
+    "path": "v1/users/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "PROPFIND",
+    "path": "v1/users/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "TRACE",
+    "path": "v1/interests",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "GET",
+    "path": "v1/interests/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "PATCH",
     "path": "v1/interests/*",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
@@ -360,19 +205,24 @@
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "OPTIONS",
-    "path": "v1/event/*",
+    "method": "DELETE",
+    "path": "v1/users",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
     "method": "PUT",
-    "path": "v1/interests",
+    "path": "v1/users/*",
     "name": "github.com/labstack/echo/v4.glob..func1"
   },
   {
-    "method": "HEAD",
-    "path": "v1/interests/*",
-    "name": "github.com/labstack/echo/v4.glob..func1"
+    "method": "GET",
+    "path": "v1/users/me/",
+    "name": "weatherit/controllers/users.(*UserController).GetProfile-fm"
+  },
+  {
+    "method": "GET",
+    "path": "v1/interests/",
+    "name": "weatherit/controllers/interests.(*InterestController).GetAll-fm"
   },
   {
     "method": "POST",
@@ -380,8 +230,158 @@
     "name": "weatherit/controllers/events.(*EventController).Store-fm"
   },
   {
+    "method": "HEAD",
+    "path": "v1/users",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "OPTIONS",
+    "path": "v1/event/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "POST",
+    "path": "v1/event/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "CONNECT",
+    "path": "v1/event",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "HEAD",
+    "path": "v1/interests",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "PATCH",
+    "path": "v1/interests",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "CONNECT",
+    "path": "v1/interests/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "POST",
+    "path": "v1/interests/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "PROPFIND",
+    "path": "v1/interests/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "OPTIONS",
+    "path": "v1/event",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "HEAD",
+    "path": "v1/event/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "GET",
+    "path": "v1/users",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "TRACE",
+    "path": "v1/event/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "REPORT",
+    "path": "v1/users",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "PATCH",
+    "path": "v1/users/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "REPORT",
+    "path": "v1/event",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "DELETE",
+    "path": "v1/event/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "CONNECT",
+    "path": "v1/users",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "PUT",
+    "path": "v1/event/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "GET",
+    "path": "v1/event/",
+    "name": "weatherit/controllers/events.(*EventController).GetEvents-fm"
+  },
+  {
+    "method": "PROPFIND",
+    "path": "v1/event",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "REPORT",
+    "path": "v1/users/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "CONNECT",
+    "path": "v1/interests",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "DELETE",
+    "path": "v1/interests",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "PUT",
+    "path": "v1/event",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "PATCH",
+    "path": "v1/users",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
     "method": "OPTIONS",
     "path": "v1/interests",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "DELETE",
+    "path": "v1/interests/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "POST",
+    "path": "v1/event",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "PROPFIND",
+    "path": "v1/event/*",
+    "name": "github.com/labstack/echo/v4.glob..func1"
+  },
+  {
+    "method": "OPTIONS",
+    "path": "v1/users",
     "name": "github.com/labstack/echo/v4.glob..func1"
   }
 ]
