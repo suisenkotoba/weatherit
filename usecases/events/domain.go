@@ -3,6 +3,7 @@ package events
 import (
 	"context"
 	"time"
+	openweather "weatherit/drivers/thirdparties/weather"
 	coordinate "weatherit/usecases/coordinates"
 )
 
@@ -31,6 +32,7 @@ type UseCase interface {
 	ScheduleEvent(ctx context.Context, event *Domain) (int, error)
 	CancelEvent(ctx context.Context, eventId, userId int) error
 	UpdateEvent(ctx context.Context, event *Domain) error
+	ForecastEvent(event Domain, mode string, dt1, dt2 int64) openweather.Weather
 }
 
 type Repository interface {

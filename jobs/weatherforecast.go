@@ -2,7 +2,7 @@ package jobs
 
 import (
 	"context"
-	"fmt"
+	"math/rand"
 	"time"
 	"weatherit/usecases"
 	"weatherit/usecases/alterplan"
@@ -10,12 +10,7 @@ import (
 )
 
 func Forecast(uc usecases.UsecaseList, offset string) {
-	// get all event within range
 	ctx := context.TODO()
-	data, err := uc.Interest.GetAvailableInterests(ctx)
-	fmt.Println(err)
-	fmt.Println(data)
-	// ==
 
 	events := []events.Domain{}
 
@@ -43,13 +38,25 @@ func Forecast(uc usecases.UsecaseList, offset string) {
 			alterPlan = alterplan.Domain{
 				EventID: events[i].ID,
 			}
+			alterPlan.ID, _ = uc.AlterPlan.MakeEventAlterPlan(ctx, &alterPlan)
 		}
+		dt1 := events[i].StartAt.Unix()
+		dt2 := events[i].EndAt.Unix()
 		if offset == "H1" {
+			weather := uc.Event.ForecastEvent(events[i], "hour", dt1, dt2)
+			alterPlan.WeatherForecastH1 = weather.Name
 			interests := uc.UserInterest.GetUserInterestIDs(ctx, events[i].UserID)
 			activities := uc.Activity.GetActivitiesByInterest(ctx, interests)
-			//	random pick activity
-			//	create alter plan for event
-			//	send via pusher
+			randomIndex := rand.Intn(len(activities))
+			alterPlan.ActivityID = activities[randomIndex].ID
+			//	TODO send via pusher
+		} else if offset == "H6" {
+			weather := uc.Event.ForecastEvent(events[i], "hour", dt1, dt2)
+			alterPlan.WeatherForecastH6 = weather.Name
+		} else if offset == "D1" {
+			weather := uc.Event.ForecastEvent(events[i], "day", dt1, dt2)
+			alterPlan.WeatherForecastD1 = weather.Name
 		}
+		uc.AlterPlan.UpdateEventAlterPlan(ctx, &alterPlan)
 	}
 }

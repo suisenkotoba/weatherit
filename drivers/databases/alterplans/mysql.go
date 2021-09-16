@@ -24,13 +24,13 @@ func (ar *mysqlAlterPlanRepository) FindByEventID(ctx context.Context, eventId i
 
 }
 
-func (ar *mysqlAlterPlanRepository) Store(ctx context.Context, plan *alterplan.Domain) error{
+func (ar *mysqlAlterPlanRepository) Store(ctx context.Context, plan *alterplan.Domain) (int, error){
 	rec := fromDomain(*plan)
 	result := ar.Conn.Create(rec)
 	if result.Error != nil {
-		return result.Error
+		return 0, result.Error
 	}
-	return nil
+	return rec.ID, nil
 }
 
 func (ar *mysqlAlterPlanRepository) Update(ctx context.Context, plan *alterplan.Domain) error {

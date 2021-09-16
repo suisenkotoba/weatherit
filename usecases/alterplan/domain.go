@@ -14,12 +14,12 @@ type Domain struct {
 
 type UseCase interface {
 	GetEventAlterPlan(ctx context.Context, eventId int) Domain
-	MakeEventAlterPlan(ctx context.Context, plan *Domain) error
+	MakeEventAlterPlan(ctx context.Context, plan *Domain) (int, error)
 	UpdateEventAlterPlan(ctx context.Context, plan *Domain) error
 }
 
 type Repository interface {
 	FindByEventID(ctx context.Context, eventId int)  Domain
-	Store(ctx context.Context, plan *Domain) error
+	Store(ctx context.Context, plan *Domain) (int, error)
 	Update(ctx context.Context, plan *Domain) error
 }

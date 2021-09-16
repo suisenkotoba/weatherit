@@ -7,7 +7,7 @@ type Weather struct {
 }
 
 type WeatherForecast struct {
-	DT      int       `json:"dt"`
+	DT      int64       `json:"dt"`
 	Weather []Weather `json:"weather"`
 }
 

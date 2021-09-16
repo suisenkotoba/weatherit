@@ -22,8 +22,8 @@ func (ac *alterPlanUseCase) GetEventAlterPlan(ctx context.Context, eventId int) 
 	return plan
 }
 
-func (ac *alterPlanUseCase) MakeEventAlterPlan(ctx context.Context, plan *Domain) error {
-	return nil
+func (ac *alterPlanUseCase) MakeEventAlterPlan(ctx context.Context, plan *Domain) (int, error) {
+	return ac.alterPlanRepository.Store(ctx, plan)
 }
 
 func (ac *alterPlanUseCase) UpdateEventAlterPlan(ctx context.Context, plan *Domain) error {
