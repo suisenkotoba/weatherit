@@ -82,7 +82,7 @@ func (eu *eventUseCase) UpdateEvent(ctx context.Context, event *Domain) error {
 	return err
 }
 
-func (eu *eventUseCase) ForecastEvent(event Domain, mode string, dt1, d2 int64) openweather.Weather {
+func (eu *eventUseCase) ForecastEvent(event Domain, mode string, dt1, dt2 int64) openweather.Weather {
 	weather := eu.weatherForecaster.GetTargetDTForecast(event.GeoLoc.Lat, event.GeoLoc.Long, dt1, dt2, mode)
 	return weather
 }
