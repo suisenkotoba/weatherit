@@ -3,17 +3,20 @@ package events
 import (
 	"context"
 	"time"
+	openweather "weatherit/drivers/thirdparties/weather"
 )
 
 type eventUseCase struct {
-	eventRepository Repository
-	contextTimeout  time.Duration
+	eventRepository   Repository
+	contextTimeout    time.Duration
+	weatherForecaster openweather.OpenWeather
 }
 
-func NewEventUseCase(timeout time.Duration, er Repository) UseCase {
+func NewEventUseCase(timeout time.Duration, er Repository, forecaster openweather.OpenWeather) UseCase {
 	return &eventUseCase{
-		eventRepository: er,
-		contextTimeout:  timeout,
+		eventRepository:   er,
+		contextTimeout:    timeout,
+		weatherForecaster: forecaster,
 	}
 }
 
@@ -53,6 +56,14 @@ func (eu *eventUseCase) GetAllUserEventsByDateRange(ctx context.Context, userId 
 	return data, nil
 }
 
+func (eu *eventUseCase) GetAllEventByDateRange(ctx context.Context, from time.Time, to time.Time) ([]Domain, error){
+	data, err := eu.eventRepository.FindAllByDate(ctx, from, to)
+	if err != nil {
+		return []Domain{}, err
+	}
+	return data, nil
+}
+
 func (eu *eventUseCase) ScheduleEvent(ctx context.Context, event *Domain) (int, error) {
 	eventId, err := eu.eventRepository.Store(ctx, event)
 	if err != nil {
@@ -71,19 +82,8 @@ func (eu *eventUseCase) UpdateEvent(ctx context.Context, event *Domain) error {
 	return err
 }
 
-func (eu *eventUseCase) GetEventChecklist(ctx context.Context, eventID int) ([]Checklist, error) {
-	return []Checklist{}, nil
+func (eu *eventUseCase) ForecastEvent(event Domain, mode string, dt1, d2 int64) openweather.Weather {
+	weather := eu.weatherForecaster.GetTargetDTForecast(event.GeoLoc.Lat, event.GeoLoc.Long, dt1, dt2, mode)
+	return weather
 }
 
-func (eu *eventUseCase) CreateEventCheklist(ctx context.Context, checklists []*Checklist, eventId int) (int, error) {
-	return 0, nil
-}
-
-func (eu *eventUseCase) UpdateChecklist(ctx context.Context, checklists []*Checklist) (int, error) {
-	return 0, nil
-
-}
-
-func (eu *eventUseCase) RemoveChecklist(ctx context.Context, checklistIDs []int) error {
-	return nil
-}

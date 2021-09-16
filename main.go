@@ -2,23 +2,32 @@ package main
 
 import (
 	"log"
+	"os"
 	"time"
 	_middleware "weatherit/app/middleware"
 	_routes "weatherit/app/routes"
 	_driverFactory "weatherit/drivers"
 	_dbDriver "weatherit/drivers/databases"
+	"weatherit/jobs"
+
+	_openWeather "weatherit/drivers/thirdparties/weather"
 
 	_userController "weatherit/controllers/users"
-	_userUsecase "weatherit/usecases/users"
+	_users "weatherit/usecases/users"
 
 	_eventController "weatherit/controllers/events"
-	_eventUsecase "weatherit/usecases/events"
+	_activities "weatherit/usecases/activities"
+	_alterplans "weatherit/usecases/alterplan"
+	_events "weatherit/usecases/events"
 
 	_interestController "weatherit/controllers/interests"
-	_interestUsecase "weatherit/usecases/interests"
+	_interests "weatherit/usecases/interests"
 
-	_userInterestUsecase "weatherit/usecases/user_interests"
+	_userInterests "weatherit/usecases/user_interests"
 
+	"weatherit/usecases"
+
+	"github.com/jasonlvhit/gocron"
 	echo "github.com/labstack/echo/v4"
 	"github.com/spf13/viper"
 )
@@ -36,6 +45,11 @@ func init() {
 }
 
 func main() {
+	opt := "api"
+	if len(os.Args) > 1 {
+		opt = os.Args[1]
+	}
+
 	configDB := _dbDriver.ConfigDB{
 		DB_Username: viper.GetString(`database.user`),
 		DB_Password: viper.GetString(`database.pass`),
@@ -52,31 +66,56 @@ func main() {
 		ExpiresDuration: viper.GetInt(`jwt.expired`),
 	}
 
+	weatherForecaster := _openWeather.OpenWeather{AppKey: viper.GetString(`openweather.key`)}
+
 	timeoutContext := time.Duration(viper.GetInt("context.timeout")) * time.Second
 
-	e := echo.New()
-
 	userRepo := _driverFactory.NewUserRepository(db)
-	userUsecase := _userUsecase.NewUserUseCase(userRepo, &configJWT, timeoutContext)
+	userUsecase := _users.NewUserUseCase(userRepo, &configJWT, timeoutContext)
 	userInterestRepo := _driverFactory.NewUserInterestRepository(db)
-	userInterestUsecase := _userInterestUsecase.NewUserInterestUseCase(timeoutContext, userInterestRepo)
-	userCtrl := _userController.NewUserController(userUsecase, userInterestUsecase)
+	userInterestUsecase := _userInterests.NewUserInterestUseCase(timeoutContext, userInterestRepo)
 
 	eventRepo := _driverFactory.NewEventRepository(db)
-	eventUsecase := _eventUsecase.NewEventUseCase(timeoutContext, eventRepo)
-	eventCtrl := _eventController.NewEventController(eventUsecase)
+	eventUsecase := _events.NewEventUseCase(timeoutContext, eventRepo, weatherForecaster)
+
+	activityRepo := _driverFactory.NewActivityRepository(db)
+	activityUsecase := _activities.NewActivityUseCase(timeoutContext, activityRepo)
+
+	alterplanRepo := _driverFactory.NewAlterPlanRepository(db)
+	alterplanUsecase := _alterplans.NewAlterPlanUseCase(timeoutContext, alterplanRepo)
 
 	interestRepo := _driverFactory.NewInterestRepository(db)
-	interestUsecase := _interestUsecase.NewInterestUseCase(timeoutContext, interestRepo)
-	interestCtrl := _interestController.NewInterestController(interestUsecase)
+	interestUsecase := _interests.NewInterestUseCase(timeoutContext, interestRepo)
 
-	routesInit := _routes.ControllerList{
-		JWTMiddleware:      configJWT.Init(),
-		UserController:     *userCtrl,
-		EventController:    *eventCtrl,
-		InterestController: *interestCtrl,
+	if opt == "api" {
+		e := echo.New()
+
+		userCtrl := _userController.NewUserController(userUsecase, userInterestUsecase)
+		eventCtrl := _eventController.NewEventController(eventUsecase)
+		interestCtrl := _interestController.NewInterestController(interestUsecase)
+
+		routesInit := _routes.ControllerList{
+			JWTMiddleware:      configJWT.Init(),
+			UserController:     *userCtrl,
+			EventController:    *eventCtrl,
+			InterestController: *interestCtrl,
+		}
+
+		routesInit.RouteRegister(e)
+		log.Fatal(e.Start(viper.GetString("server.address")))
+	} else if opt == "scheduler" {
+		ucList := usecases.UsecaseList{
+			Event:        eventUsecase,
+			User:         userUsecase,
+			Interest:     interestUsecase,
+			UserInterest: userInterestUsecase,
+			AlterPlan:    alterplanUsecase,
+			Activity:     activityUsecase,
+		}
+		scheduler := gocron.NewScheduler()
+		scheduler.Every(1).Minute().Do(jobs.Forecast, ucList, "H1")
+		scheduler.Every(1).Minute().Do(jobs.Forecast, ucList, "H6")
+		scheduler.Every(1).Minute().Do(jobs.Forecast, ucList, "D1")
+		<-scheduler.Start()
 	}
-	routesInit.RouteRegister(e)
-
-	log.Fatal(e.Start(viper.GetString("server.address")))
 }
