@@ -29,7 +29,7 @@ func (uc *userUseCase) CreateToken(ctx context.Context, email, password string) 
 	ctx, cancel := context.WithTimeout(ctx, uc.contextTimeout)
 	defer cancel()
 
-	if strings.TrimSpace(email) == "" && strings.TrimSpace(password) == "" {
+	if strings.TrimSpace(email) == "" || strings.TrimSpace(password) == "" {
 		return "", errors.New(errorMessage.UsernamePasswordEmpty)
 	}
 

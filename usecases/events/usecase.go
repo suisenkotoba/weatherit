@@ -83,6 +83,9 @@ func (eu *eventUseCase) UpdateEvent(ctx context.Context, event *Domain) error {
 }
 
 func (eu *eventUseCase) ForecastEvent(event Domain, mode string, dt1, dt2 int64) weatherforecast.Domain {
+	if mode != "hour" && mode != "day"{
+		return weatherforecast.Domain{}
+	}
 	weather := eu.weatherForecaster.GetTargetDTForecast(event.GeoLoc.Lat, event.GeoLoc.Long, dt1, dt2, mode)
 	return weather
 }
