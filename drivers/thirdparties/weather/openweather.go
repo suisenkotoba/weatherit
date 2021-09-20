@@ -5,21 +5,27 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"weatherit/usecases/weatherforecast"
 )
 
 const OpenWeatherOneApiUrl = "https://api.openweathermap.org/data/2.5/onecall?"
 
-type OpenWeather struct {
+type openWeather struct {
 	AppKey string
 }
 
-func (ow *OpenWeather) GetForecast(lat, long float64, excludes string) (res AllWeatherForecast) {
-	url := OpenWeatherOneApiUrl + fmt.Sprintf("appid=%s?long=%f?lat=%f?exclude=%s", ow.AppKey, lat, long, excludes)
+func NewWeatherForecaster(appKey string) weatherforecast.Repository {
+	return &openWeather{
+		AppKey: appKey,
+	}
+}
+
+func (ow *openWeather) GetForecast(lat, long float64, excludes string) (res AllWeatherForecast) {
+	url := OpenWeatherOneApiUrl + fmt.Sprintf("appid=%s&lon=%f&lat=%f&exclude=%s", ow.AppKey, long, lat, excludes)
 	response, err := http.Get(url)
 	if err != nil {
 		return res
 	}
-
 	defer response.Body.Close()
 	responseBody, err := ioutil.ReadAll(response.Body)
 	if err != nil {
@@ -33,25 +39,25 @@ func (ow *OpenWeather) GetForecast(lat, long float64, excludes string) (res AllW
 
 }
 
-func (ow *OpenWeather) GetCurrentForecast(lat, long float64) Weather {
+func (ow *openWeather) GetCurrentForecast(lat, long float64) weatherforecast.Domain {
 	excludes := "minutely,daily,hourly"
 	res := ow.GetForecast(lat, long, excludes)
-	return res.Current.Weather[0]
+	return res.Current.Weather[0].ToDomain()
 }
 
-func (ow *OpenWeather) GetHourlyForecast(lat, long float64) []WeatherForecast {
+func (ow *openWeather) GetHourlyForecast(lat, long float64) []WeatherForecast {
 	excludes := "minutely,daily"
 	res := ow.GetForecast(lat, long, excludes)
 	return res.Hourly
 }
 
-func (ow *OpenWeather) GetDailyForecast(lat, long float64) []WeatherForecast {
+func (ow *openWeather) GetDailyForecast(lat, long float64) []WeatherForecast {
 	excludes := "minutely,hourly"
 	res := ow.GetForecast(lat, long, excludes)
 	return res.Daily
 }
 
-func (ow *OpenWeather) GetTargetDTForecast(lat, long float64, dt1, dt2 int64, mode string) Weather {
+func (ow *openWeather) GetTargetDTForecast(lat, long float64, dt1, dt2 int64, mode string) weatherforecast.Domain {
 	targetForecast := Weather{}
 	forecasts := []WeatherForecast{}
 	if mode == "hour" {
@@ -61,8 +67,8 @@ func (ow *OpenWeather) GetTargetDTForecast(lat, long float64, dt1, dt2 int64, mo
 	}
 	for i := 0; i < len(forecasts); i++ {
 		if forecasts[i].DT >= dt1 && forecasts[i].DT <= dt2 {
-			return forecasts[i].Weather[0]
+			return forecasts[i].Weather[0].ToDomain()
 		}
 	}
-	return targetForecast
+	return targetForecast.ToDomain()
 }

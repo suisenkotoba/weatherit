@@ -3,8 +3,8 @@ package events
 import (
 	"context"
 	"time"
-	openweather "weatherit/drivers/thirdparties/weather"
 	coordinate "weatherit/usecases/coordinates"
+	"weatherit/usecases/weatherforecast"
 )
 
 type Domain struct {
@@ -32,7 +32,7 @@ type UseCase interface {
 	ScheduleEvent(ctx context.Context, event *Domain) (int, error)
 	CancelEvent(ctx context.Context, eventId, userId int) error
 	UpdateEvent(ctx context.Context, event *Domain) error
-	ForecastEvent(event Domain, mode string, dt1, dt2 int64) openweather.Weather
+	ForecastEvent(event Domain, mode string, dt1, dt2 int64) weatherforecast.Domain
 }
 
 type Repository interface {
@@ -40,13 +40,6 @@ type Repository interface {
 	FindByDate(ctx context.Context, userId int, from time.Time, to time.Time) ([]Domain, error)
 	FindAllByDate(ctx context.Context, from time.Time, to time.Time) ([]Domain, error)
 	Store(ctx context.Context, newEvent *Domain) (int, error)
-	Delete(ctx context.Context, eventId, userId int) (int, error)
+	Delete(ctx context.Context, eventId, userId int) error
 	Update(ctx context.Context, event *Domain) (int, error)
-}
-
-type ChecklistRepository interface {
-	Fetch(ctx context.Context, eventId int) ([]Checklist, error)
-	Store(ctx context.Context, checklist []*Checklist, eventId int) (int, error)
-	Update(ctx context.Context, checklist []*Checklist) (int, error)
-	Delete(ctx context.Context, checklistIDs []int) error
 }

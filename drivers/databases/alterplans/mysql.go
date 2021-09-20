@@ -19,7 +19,8 @@ func NewAlterPlanRepository(conn *gorm.DB) alterplan.Repository {
 
 func (ar *mysqlAlterPlanRepository) FindByEventID(ctx context.Context, eventId int) alterplan.Domain {
 	rec := AlterPlan{}
-	_ = ar.Conn.Find(&rec, "event_id = ?", eventId)
+	_ = ar.Conn.Find(&rec, "event_id = ?", eventId).Error
+	// TODO if error, then log error
 	return rec.ToDomain()
 
 }

@@ -10,8 +10,6 @@ import (
 	_dbDriver "weatherit/drivers/databases"
 	"weatherit/jobs"
 
-	_openWeather "weatherit/drivers/thirdparties/weather"
-
 	_userController "weatherit/controllers/users"
 	_users "weatherit/usecases/users"
 
@@ -66,8 +64,6 @@ func main() {
 		ExpiresDuration: viper.GetInt(`jwt.expired`),
 	}
 
-	weatherForecaster := _openWeather.OpenWeather{AppKey: viper.GetString(`openweather.key`)}
-
 	timeoutContext := time.Duration(viper.GetInt("context.timeout")) * time.Second
 
 	userRepo := _driverFactory.NewUserRepository(db)
@@ -76,6 +72,7 @@ func main() {
 	userInterestUsecase := _userInterests.NewUserInterestUseCase(timeoutContext, userInterestRepo)
 
 	eventRepo := _driverFactory.NewEventRepository(db)
+	weatherForecaster := _driverFactory.NewWeatherForecaster(viper.GetString(`openweather.key`))
 	eventUsecase := _events.NewEventUseCase(timeoutContext, eventRepo, weatherForecaster)
 
 	activityRepo := _driverFactory.NewActivityRepository(db)

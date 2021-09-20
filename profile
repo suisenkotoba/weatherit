@@ -1,0 +1,20 @@
+mode: set
+weatherit/usecases/activities/usecase.go:13.71,18.2 1 1
+weatherit/usecases/activities/usecase.go:20.113,22.2 1 1
+weatherit/usecases/activities/usecase.go:24.89,26.2 1 1
+weatherit/usecases/interests/usecase.go:13.71,18.2 1 1
+weatherit/usecases/interests/usecase.go:20.89,22.16 2 1
+weatherit/usecases/interests/usecase.go:25.2,25.18 1 1
+weatherit/usecases/interests/usecase.go:22.16,24.3 1 1
+weatherit/usecases/user_interests/usecase.go:13.75,18.2 1 1
+weatherit/usecases/user_interests/usecase.go:20.106,22.40 2 1
+weatherit/usecases/user_interests/usecase.go:29.2,30.12 2 1
+weatherit/usecases/user_interests/usecase.go:22.40,28.3 1 1
+weatherit/usecases/user_interests/usecase.go:33.90,35.2 1 1
+weatherit/usecases/user_interests/usecase.go:37.90,40.38 3 1
+weatherit/usecases/user_interests/usecase.go:43.2,43.12 1 1
+weatherit/usecases/user_interests/usecase.go:40.38,42.3 1 1
+weatherit/usecases/alterplan/usecase.go:13.72,18.2 1 1
+weatherit/usecases/alterplan/usecase.go:20.88,23.2 2 1
+weatherit/usecases/alterplan/usecase.go:25.96,27.2 1 1
+weatherit/usecases/alterplan/usecase.go:29.91,31.2 1 1

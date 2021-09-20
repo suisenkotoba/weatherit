@@ -3,16 +3,16 @@ package events
 import (
 	"context"
 	"time"
-	openweather "weatherit/drivers/thirdparties/weather"
+	"weatherit/usecases/weatherforecast"
 )
 
 type eventUseCase struct {
 	eventRepository   Repository
 	contextTimeout    time.Duration
-	weatherForecaster openweather.OpenWeather
+	weatherForecaster weatherforecast.Repository
 }
 
-func NewEventUseCase(timeout time.Duration, er Repository, forecaster openweather.OpenWeather) UseCase {
+func NewEventUseCase(timeout time.Duration, er Repository, forecaster weatherforecast.Repository) UseCase {
 	return &eventUseCase{
 		eventRepository:   er,
 		contextTimeout:    timeout,
@@ -73,7 +73,7 @@ func (eu *eventUseCase) ScheduleEvent(ctx context.Context, event *Domain) (int, 
 }
 
 func (eu *eventUseCase) CancelEvent(ctx context.Context, eventId, userId int) error {
-	_, err := eu.eventRepository.Delete(ctx, eventId, userId)
+	err := eu.eventRepository.Delete(ctx, eventId, userId)
 	return err
 }
 
@@ -82,7 +82,7 @@ func (eu *eventUseCase) UpdateEvent(ctx context.Context, event *Domain) error {
 	return err
 }
 
-func (eu *eventUseCase) ForecastEvent(event Domain, mode string, dt1, dt2 int64) openweather.Weather {
+func (eu *eventUseCase) ForecastEvent(event Domain, mode string, dt1, dt2 int64) weatherforecast.Domain {
 	weather := eu.weatherForecaster.GetTargetDTForecast(event.GeoLoc.Lat, event.GeoLoc.Long, dt1, dt2, mode)
 	return weather
 }
