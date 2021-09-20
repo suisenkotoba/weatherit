@@ -122,7 +122,7 @@ func TestGetAllUserEvents(t *testing.T) {
 		assert.NotEmpty(t, res)
 	})
 
-	t.Run("test case 4, error raised", func(t *testing.T) {
+	t.Run("test case 4, error raised (repo by date range)", func(t *testing.T) {
 		errorRepo := errors.New("Error Repo")
 		var (
 			eventRepo         eventsMock.Repository
@@ -133,6 +133,37 @@ func TestGetAllUserEvents(t *testing.T) {
 		eventRepo.On("FindByDate", mock.Anything, mock.AnythingOfType("int"),
 			mock.AnythingOfType("time.Time"), mock.AnythingOfType("time.Time")).Return([]events.Domain{}, errorRepo)
 		res, err := eventsUC.GetAllUserEvents(ctx, 1, "2021-09-07", "2021-09-14", "")
+
+		assert.NotNil(t, err)
+		assert.Empty(t, res)
+	})
+
+	t.Run("test case 5, error raised (repo by month)", func(t *testing.T) {
+		errorRepo := errors.New("Error Repo")
+		var (
+			eventRepo         eventsMock.Repository
+			weatherForecaster weatherForecastMock.Repository
+		)
+		ctx := context.Background()
+		eventsUC := events.NewEventUseCase(2, &eventRepo, &weatherForecaster)
+		eventRepo.On("FindByDate", mock.Anything, mock.AnythingOfType("int"),
+			mock.AnythingOfType("time.Time"), mock.AnythingOfType("time.Time")).Return([]events.Domain{}, errorRepo)
+		res, err := eventsUC.GetAllUserEvents(ctx, 1, "", "", "2021-09")
+
+		assert.NotNil(t, err)
+		assert.Empty(t, res)
+	})
+
+	t.Run("test case 6, error raised (repo all)", func(t *testing.T) {
+		errorRepo := errors.New("Error Repo")
+		var (
+			eventRepo         eventsMock.Repository
+			weatherForecaster weatherForecastMock.Repository
+		)
+		ctx := context.Background()
+		eventsUC := events.NewEventUseCase(2, &eventRepo, &weatherForecaster)
+		eventRepo.On("Find", mock.Anything, mock.AnythingOfType("int")).Return([]events.Domain{}, errorRepo)
+		res, err := eventsUC.GetAllUserEvents(ctx, 1, "", "", "")
 
 		assert.NotNil(t, err)
 		assert.Empty(t, res)

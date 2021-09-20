@@ -155,6 +155,26 @@ func TestStore(t *testing.T) {
 		_, err := userUC.Store(ctx, &newUserDomain)
 		assert.NotNil(t, err)
 	})
+
+	t.Run("test case 4, failed to check user exists", func(t *testing.T) {
+		errorRepo := errors.New("Error Repo")
+		var userRepo userMock.Repository
+		ctx := context.Background()
+		userUC := users.NewUserUseCase(&userRepo, &jwtAuth, 2)
+		userRepo.On("GetByEmail", mock.Anything, mock.AnythingOfType("string")).Return(users.Domain{}, errorRepo)
+		newUserDomain := users.Domain{
+			Name:     "name",
+			Email:    "email",
+			Password: "hello",
+			DOB:      time.Now(),
+			Address:  "address",
+			GeoLoc:   coordinate.Coordinate{Lat: -1.08, Long: 2.32},
+			Gender:   "gender",
+		}
+		_, err := userUC.Store(ctx, &newUserDomain)
+
+		assert.NotNil(t, err)
+	})
 }
 func TestUpdate(t *testing.T) {
 	jwtAuth := middleware.ConfigJWT{
