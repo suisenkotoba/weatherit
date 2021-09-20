@@ -2,6 +2,7 @@ package jobs
 
 import (
 	"context"
+	"fmt"
 	"math/rand"
 	"time"
 	"weatherit/usecases"
@@ -53,6 +54,7 @@ func Forecast(uc usecases.UsecaseList, offset string) {
 		dt2 := events[i].EndAt.Unix()
 		if offset == "H1" {
 			weather := uc.Event.ForecastEvent(events[i], "hour", dt1, dt2)
+			fmt.Println(weather)
 			alterPlan.WeatherForecastH1 = weather.Name
 			if niceWeatherIndex[weather.Name] < 700 {
 				interests := uc.UserInterest.GetUserInterestIDs(ctx, events[i].UserID)

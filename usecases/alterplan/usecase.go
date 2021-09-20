@@ -27,5 +27,5 @@ func (ac *alterPlanUseCase) MakeEventAlterPlan(ctx context.Context, plan *Domain
 }
 
 func (ac *alterPlanUseCase) UpdateEventAlterPlan(ctx context.Context, plan *Domain) error {
-	return nil
+	return ac.alterPlanRepository.Update(ctx, plan)
 }

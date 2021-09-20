@@ -7,6 +7,9 @@ import (
 	eventDB "weatherit/drivers/databases/events"
 	eventDomain "weatherit/usecases/events"
 
+	weatherForecasterSource "weatherit/drivers/thirdparties/weather"
+	weatherForecasterDomain "weatherit/usecases/weatherforecast"
+
 	alterplanDB "weatherit/drivers/databases/alterplans"
 	alterplanDomain "weatherit/usecases/alterplan"
 
@@ -28,6 +31,10 @@ func NewUserRepository(conn *gorm.DB) userDomain.Repository {
 
 func NewEventRepository(conn *gorm.DB) eventDomain.Repository {
 	return eventDB.NewEventRepository(conn)
+}
+
+func NewWeatherForecaster(appKey string) weatherForecasterDomain.Repository {
+	return weatherForecasterSource.NewWeatherForecaster(appKey)
 }
 
 func NewActivityRepository(conn *gorm.DB) activityDomain.Repository {

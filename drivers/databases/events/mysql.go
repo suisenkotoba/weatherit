@@ -2,7 +2,6 @@ package events
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"weatherit/usecases/events"
@@ -16,16 +15,6 @@ type mysqlEventRepository struct {
 
 func NewEventRepository(conn *gorm.DB) events.Repository {
 	return &mysqlEventRepository{
-		Conn: conn,
-	}
-}
-
-type mysqlEventCheklistRepository struct {
-	Conn *gorm.DB
-}
-
-func NewEventChecklistRepository(conn *gorm.DB) events.ChecklistRepository {
-	return &mysqlEventCheklistRepository{
 		Conn: conn,
 	}
 }
@@ -68,7 +57,7 @@ func (er *mysqlEventRepository) FindByDate(ctx context.Context, userId int, from
 	return eventDomain, nil
 }
 
-func (er *mysqlEventRepository) FindAllByDate(ctx context.Context, from time.Time, to time.Time) ([]events.Domain, error){
+func (er *mysqlEventRepository) FindAllByDate(ctx context.Context, from time.Time, to time.Time) ([]events.Domain, error) {
 	rec := []Event{}
 
 	query := er.Conn
@@ -97,10 +86,9 @@ func (er *mysqlEventRepository) Store(ctx context.Context, newEvent *events.Doma
 	return rec.ID, nil
 }
 
-func (er *mysqlEventRepository) Delete(ctx context.Context, eventId, userId int) (int, error) {
+func (er *mysqlEventRepository) Delete(ctx context.Context, eventId, userId int) error {
 	result := er.Conn.Where("id = ? AND user_id = ?", eventId, userId).Delete(&Event{})
-	fmt.Println(result)
-	return 0, result.Error
+	return result.Error
 }
 
 func (er *mysqlEventRepository) Update(ctx context.Context, event *events.Domain) (int, error) {
@@ -113,21 +101,5 @@ func (er *mysqlEventRepository) Update(ctx context.Context, event *events.Domain
 	}
 
 	return rec.ID, nil
-	
-}
 
-func (evr *mysqlEventCheklistRepository) Fetch(ctx context.Context, eventId int) ([]events.Checklist, error) {
-	return []events.Checklist{}, nil
-}
-
-func (evr *mysqlEventCheklistRepository) Store(ctx context.Context, checklist []*events.Checklist, eventId int) (int, error) {
-	return 0, nil
-}
-
-func (evr *mysqlEventCheklistRepository) Update(ctx context.Context, checklist []*events.Checklist) (int, error) {
-	return 0, nil
-}
-
-func (evr *mysqlEventCheklistRepository) Delete(ctx context.Context, checklistIDs []int) error {
-	return nil
 }
